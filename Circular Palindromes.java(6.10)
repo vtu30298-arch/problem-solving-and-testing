@@ -1,0 +1,33 @@
+import java.io.*;
+
+public class Solution {
+
+    static int expand(String s, int left, int right, int start, int end) {
+        while (left >= start && right <= end &&
+               s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int n = Integer.parseInt(br.readLine().trim());
+        String s = br.readLine().trim();
+        String t = s + s;
+
+        for (int start = 0; start < n; start++) {
+            int end = start + n - 1;
+            int max = 1;
+
+            for (int i = start; i <= end; i++) {
+                max = Math.max(max, expand(t, i, i, start, end));
+                max = Math.max(max, expand(t, i, i + 1, start, end));
+            }
+
+            System.out.println(max);
+        }
+    }
+}
